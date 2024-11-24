@@ -54,19 +54,23 @@ const ZxingScanner = () => {
         }
       );
       console.log(`Started continuous decode from camera with id ${selectedDeviceId}`);
-
+  
       // Access the media track to control zoom
       const stream = videoRef.current.srcObject;
       if (stream) {
         const track = stream.getVideoTracks()[0];
         const capabilities = track.getCapabilities();
-
-        if (capabilities.zoom) {
+  
+        if (capabilities && capabilities.zoom) {
           setMaxZoom(capabilities.zoom.max); // Set maximum zoom supported by the camera
+          setZoom(capabilities.zoom.min || 1); // Set initial zoom level to the minimum supported
+        } else {
+          console.log("Zoom capability not supported on this device.");
         }
       }
     }
   };
+  
 
   const handleZoomChange = (e) => {
     const newZoom = parseFloat(e.target.value);
