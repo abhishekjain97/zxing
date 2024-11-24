@@ -7,6 +7,8 @@ const ZxingScanner = () => {
   const [devices, setDevices] = useState([]);
   const [selectedDeviceId, setSelectedDeviceId] = useState("");
   const [result, setResult] = useState("");
+  const [zoom, setZoom] = useState(1); // Default zoom level
+  const [maxZoom, setMaxZoom] = useState(1); // Maximum zoom level supported by the camera
   const codeReader = useRef(null);
 
   useEffect(() => {
@@ -33,7 +35,7 @@ const ZxingScanner = () => {
     };
   }, []);
 
-  const handleStart = () => {
+  const handleStart = async () => {
     if (codeReader.current && videoRef.current) {
       codeReader.current.decodeFromVideoDevice(
         selectedDeviceId,
@@ -52,6 +54,30 @@ const ZxingScanner = () => {
         }
       );
       console.log(`Started continuous decode from camera with id ${selectedDeviceId}`);
+
+      // Access the media track to control zoom
+      const stream = videoRef.current.srcObject;
+      if (stream) {
+        const track = stream.getVideoTracks()[0];
+        const capabilities = track.getCapabilities();
+
+        if (capabilities.zoom) {
+          setMaxZoom(capabilities.zoom.max); // Set maximum zoom supported by the camera
+        }
+      }
+    }
+  };
+
+  const handleZoomChange = (e) => {
+    const newZoom = parseFloat(e.target.value);
+    setZoom(newZoom);
+
+    const stream = videoRef.current.srcObject;
+    if (stream) {
+      const track = stream.getVideoTracks()[0];
+      track.applyConstraints({
+        advanced: [{ zoom: newZoom }],
+      });
     }
   };
 
@@ -66,7 +92,6 @@ const ZxingScanner = () => {
     <main style={{ paddingTop: "2em" }}>
       <section>
         <h1>Scan 1D/2D Code from Video Camera</h1>
-        
 
         <div>
           <button className="button" onClick={handleStart}>
@@ -100,13 +125,26 @@ const ZxingScanner = () => {
           </div>
         )}
 
+        {maxZoom > 1 && (
+          <div>
+            <label htmlFor="zoomControl">Zoom:</label>
+            <input
+              id="zoomControl"
+              type="range"
+              min="1"
+              max={maxZoom}
+              step="0.1"
+              value={zoom}
+              onChange={handleZoomChange}
+            />
+          </div>
+        )}
+
         <label>Result:</label>
         <pre>
           <code>{result}</code>
         </pre>
-
       </section>
-
     </main>
   );
 };
