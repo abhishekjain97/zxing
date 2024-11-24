@@ -42,6 +42,7 @@ const ZxingScanner = () => {
           if (result) {
             console.log(result);
             setResult(result.text);
+            alert(result.text);
             handleReset();
           }
           if (err && !(err instanceof NotFoundException)) {
