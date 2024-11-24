@@ -78,7 +78,7 @@ const ZxingScanner = () => {
         </div>
 
         <div>
-          <video ref={videoRef} width="500" height="300" style={{ border: "1px solid gray" }} />
+          <video ref={videoRef} width="300" height="200" style={{ border: "1px solid gray" }} />
         </div>
 
         {devices.length > 1 && (
