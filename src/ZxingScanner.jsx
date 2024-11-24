@@ -96,8 +96,6 @@ const ZxingScanner = () => {
     <main style={{ paddingTop: "2em" }}>
       <section>
         <h1>Scan 1D/2D Code from Video Camera Testing</h1>
-
-        <h1>Scan 1D/2D Code from Video Camera</h1>
         <p>Scan QR code and test if it's working?</p>
 
         <div>
