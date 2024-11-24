@@ -95,7 +95,7 @@ const ZxingScanner = () => {
   return (
     <main style={{ paddingTop: "2em" }}>
       <section>
-        <h1>Scan 1D/2D Code from Video Camera</h1>
+        <h1>Scan 1D/2D Code from Video Camera Testing</h1>
 
         <div>
           <button className="button" onClick={handleStart}>
