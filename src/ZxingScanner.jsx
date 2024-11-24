@@ -58,7 +58,6 @@ const ZxingScanner = () => {
   const handleReset = () => {
     if (codeReader.current) {
       codeReader.current.reset();
-      setResult("");
       console.log("Reset.");
     }
   };
@@ -67,15 +66,7 @@ const ZxingScanner = () => {
     <main style={{ paddingTop: "2em" }}>
       <section>
         <h1>Scan 1D/2D Code from Video Camera</h1>
-        <p>
-          <a className="button-small button-outline" href="../../index.html">
-            HOME 🏡
-          </a>
-        </p>
-        <p>
-          This example shows how to scan any supported 1D/2D code with the ZXing JavaScript library from the device
-          video camera. If more than one video input device is available, you can select the input device.
-        </p>
+        
 
         <div>
           <button className="button" onClick={handleStart}>
@@ -87,7 +78,7 @@ const ZxingScanner = () => {
         </div>
 
         <div>
-          <video ref={videoRef} width="300" height="200" style={{ border: "1px solid gray" }} />
+          <video ref={videoRef} width="500" height="300" style={{ border: "1px solid gray" }} />
         </div>
 
         {devices.length > 1 && (
@@ -114,26 +105,8 @@ const ZxingScanner = () => {
           <code>{result}</code>
         </pre>
 
-        <p>
-          See the{" "}
-          <a href="https://github.com/zxing-js/library/tree/master/docs/examples/multi-camera/" target="_blank">
-            source code
-          </a>{" "}
-          for this example.
-        </p>
       </section>
 
-      <footer>
-        <section>
-          <p>
-            ZXing TypeScript Demo. Licensed under the{" "}
-            <a href="https://github.com/zxing-js/library#license" target="_blank" title="MIT">
-              MIT
-            </a>
-            .
-          </p>
-        </section>
-      </footer>
     </main>
   );
 };
